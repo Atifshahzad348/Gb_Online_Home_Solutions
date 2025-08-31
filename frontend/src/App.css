@@ -1,0 +1,793 @@
+
+
+*{
+  box-sizing: border-box;
+}
+/* google fonts */
+
+.ubuntu-regular {
+  font-family: "Ubuntu", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+.ubuntu-bold {
+  font-family: "Ubuntu", sans-serif;
+  font-weight: 700;
+  font-style: normal;
+}
+
+/* custom css navigation bar start*/
+.logo{
+ width: 120px;
+
+}
+.img-size{
+  width: 80px;
+  height: 80px;
+}
+.nav-link:hover{
+  color: #fe8315;
+}
+.navbar-brand{
+  font-size: 30px;
+}
+.nav-bg{
+  background-color: rgb(253, 251, 251);
+  color: black;
+}
+.navbar-titles{
+  border-bottom: 3px solid white;
+}
+.navbar-titles:hover{
+   border-bottom: 3px solid #fe8315;
+}
+.primary-color{
+  color: #fe8315;
+}
+.primary-bg{
+  background-color: #fe8315;
+}
+.secoundry-bg{
+  background-color: black;
+  color: white;
+}
+.secoundry-bg:hover{
+  background-color: #fe8315;
+  color: black;
+}
+.primary-bg:hover{
+ color: white;
+ background: #000;
+}
+.sc-color{
+  color: #fe8315;
+}
+/* .primary-color:hover{
+  color: black;
+} */
+.secoundary-color{
+  color: black;
+}
+.secoundary-color:hover{
+  color: #fe8315;
+}
+.crasole-btn{
+ color:  black;
+ font-size: 120px ;
+}
+.form-outline{
+  width: 20rem;
+  height: 60px;
+  border-radius: 15px;
+}
+.nav-btn{
+  background-color: #fe8315;
+  color: black;
+  border-radius: 15px;
+  width: 130px;
+  font-weight: bold;
+  height: 60px;
+
+}
+.contact-btn{
+   background-color: #fe8315;
+   color: black;
+   border-radius: 15px;
+   width: 130px;
+   font-weight: bold;
+   height: 60px;
+}
+.contact-btn:hover{
+  background-color: white;
+  color: black;
+  border: 2px solid #f5f5f5;
+}
+.join-btn {
+  background-color: black;
+  color: white;
+  font-weight: bold;
+  border-radius: 5px;
+  width: 90px;
+   height: 40px;
+}
+.join-btn:hover{
+  background-color: #fe8315;
+  color: black;
+  transition: 0.9s;
+}
+.acc-btn{
+  background-color: #fe8315;
+  color: black;
+  border-radius: 5px;
+  width: 90px;
+  font-weight: bold;
+  height: 40px;
+  
+}
+.acc-btn:hover{
+  background-color: black;
+  color: white;
+  transition: 0.9s;
+
+
+
+}
+
+
+.acc-btn1{
+  background-color: black;
+  color: white;
+  border-radius: 5px;
+  width: 90px;
+  font-weight: bold;
+  height: 40px;
+  
+}
+.acc-btn1:hover{
+  background-color: #fe8315;
+  color: black;
+  transition: 0.9s;
+
+
+}
+
+.nav-btn:hover{
+  background-color: black;
+  color: white;
+}
+.right-border{
+  border-right: 2px solid white;
+}
+.off-white{
+  color: #757575;
+}
+
+/* ########### navbar reponsive custom css start ########### */
+@media (max-width: 576px) {
+  .navbar-brand{
+    font-size: 20px;
+  }
+}
+/* ########### navbar reponsive custom css start ########### */
+
+
+/* custom css navigation bar start*/
+
+/* hero section custom styling start*/
+
+.service-icon{
+  font-size: 25px;
+  color: #fe8315;
+}
+.service-icon:hover{
+  color: black;
+  transition: 0.9s;
+  
+}
+.hero-heading{
+  font-size: 4rem;
+}
+.HeroPragraph{
+  font-size: 20px;
+}
+
+.form-btn{
+  background-color: #fe8315;
+  color: white;
+  border-radius: 10px;
+  width: 370px;
+  font-weight: bold;
+  height: 50px;
+  margin-top: 20px;
+
+}
+.form-btn:hover{
+  background-color: white;
+  color: black;
+}
+/* hero section custom styling start*/
+
+
+
+ 
+/* crasole section custom style end */
+
+
+/* sign up form styling */
+.login-heading{
+ color: #fe8315;
+}
+.login-right{
+  background-color: #f4f4f6;
+  border-top-right-radius: 12px;
+  border-bottom-right-radius: 12px;
+}
+.logn-left{
+  border-top-left-radius: 12px;
+  border-bottom-left-radius: 12px;
+  /* background-color: #f4f4f6; */
+
+
+}
+.input-height{
+  height: 60px;
+  background-color: #f4f4f6;
+  border: 1px solid #fe8315;
+}
+.input-border{
+  border: 1px solid #fe8315;
+}
+.input-border:focus{
+   border: 1px solid #fe8315;
+}
+.input-height:focus{
+  background-color: #f4f4f6;
+  border: 1px solid #fe8315;
+}
+.msg-feild{
+  height: 200px;
+  background-color: #f4f4f6;
+}
+@media (max-width: 576px) {
+  .login-heading{
+    font-size: 20px;
+  }
+  .input-height{
+    height: 40px;
+  }
+  .nav-btn{
+    height: 40px;
+  }
+  .login-container{
+    padding: 10px;
+    margin-top: 10px;
+    background: black;
+  }
+}
+
+/* sign up form styling */
+
+/* Serives Pages custom styling start  */
+
+.s-card:hover{
+  cursor: pointer;
+  /* background-color: #f4f4f6; */
+  color: #fe8315;
+  background-color: black;
+  transition: 0.9s;
+ 
+
+}
+.bg-shade{
+  background-color: black;
+  padding-top: 7px;
+  padding-bottom: 7px;
+  border-top-right-radius: 20px;
+  border-bottom-left-radius: 20px;
+  opacity: 0.6;
+
+}
+.p-icon{
+  font-size: 45px;
+  color: #fe8315;
+}
+
+.card-btn{
+  background-color: #fe8315;
+  color: black;
+  border-radius: 15px;
+  width: 130px;
+  font-weight: bold;
+  height: 50px;
+  transition: 0,9s;
+}
+.card-btn:hover{
+  background-color: black;
+  color: white;
+  
+
+}
+
+.top-services{
+  background-color: #f5f5f5;
+}
+
+/* card background imgages */
+.service-btn{
+  background-color: #fe8315;
+  color: #f4f4f6;
+}
+.service-btn:hover{
+  background-color: black;
+  color: white;
+  transition: 0.9s;
+}
+
+/*<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< log in option page css >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> */
+
+.log-in-box-border {
+  border-top: 2px solid #fe8315;
+}
+
+
+
+
+
+
+
+/* footer section styling start */
+.footer-img{
+   background: url('./images/footer.jpg');
+   background-size: cover;
+}
+.facebook{
+  color: #1877F2;
+  font-size: 30px;
+}
+.whatsapp{
+  color: 	#25d366;
+  font-size: 30px;
+}
+.youtube{
+  color: #FF0000;
+  font-size: 30px;
+}
+.twiter{
+  color: #1DA1F2;
+  font-size: 30px;
+}
+.s-icon{
+  font-size: 30px;
+  color: white;
+
+}
+.s-icon:hover{
+  
+  font-size: 30px;
+  transition: 0.3s;
+  color: #fe8315;
+}
+
+/* HomeSectonSecond Styling start  */
+.HomeSection-bg{
+  background-color: #f5f5f5;
+}
+
+.radio-btn{
+  border: 2px solid black;
+  width: 200px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+.radio-btn:hover{
+  background-color: #f89f51;
+  box-shadow: #fe8315;
+}
+.form-text-area{
+  height: 200px;
+  padding-top: 5px;
+}
+.order-form-btn{
+  background-color: #fe8315;
+  color: black;
+  height: 50px;
+  border-radius: 10px;
+
+}
+.order-form-btn:hover{
+  color: black;
+  background-color: white;
+  border: 2px solid #fe8315;
+}
+.order-form-input{
+  height: 50px;
+  border-radius: 10px;
+}
+.CR-border{
+  border: 1px solid #fe8315;
+}
+
+.service-card:hover{
+  border: 1px solid #fe8315;
+}
+
+
+
+
+/* Responsiveness  */
+@media (max-width: 576px) {
+  .main-heading{
+    font-size: 25px;
+  }
+  .main-paragraph{
+    font-size: 15px;
+  }
+  .herosection-title{
+    font-size: 25px;
+  }
+  .herosection-paragraph{
+    font-size: 15px;
+  }
+  .about-title{
+    font-size: 25px;
+  }
+  .about-section-paragraph{
+    font-size: 15px;
+  }
+  .contact-title{
+    font-size: 25px;
+  }
+  .contact-pargraph{
+    font-size: 15px;
+  }
+  .Social-icons{
+    font-size: 25px;
+    padding: 10px;
+  }
+  .hide-img{
+    display: none;
+  }
+  .s-card{
+
+  }
+  .kitchen-img{
+    width: 300px;
+    height: 250px;
+  }
+}
+
+
+/* user profile css */
+.sidebar-bg{
+  background: #000;
+} 
+.sidebar-links{
+  color: white;
+}
+.sidebar-links:focus{
+  color: white;
+}
+
+.sidebar-links:hover{
+  color:  #fe8315;
+  transition: 0.4s;
+}
+.collapse-btn:hover {
+  background: #fe8315;
+  color: white;
+}
+.collapse-btn{
+  background-color: white;
+}
+.sidebar-icon{
+  font-size: 25px;
+}
+.log-out-btn{
+  background-color: #fe8315;
+  color: white;
+  
+}
+.log-out-btn:hover{
+  background-color: white;
+  color: rgb(54, 52, 52);
+}
+.log-out-icon{
+  color: white;
+}
+.log-out-icon:hover{
+  color: black;
+}
+
+.profile-btn{
+  background-color: black;
+  color: white;
+}
+.profile-btn:hover{
+  background-color: #fe8315;;
+  color: white;
+}
+.profile-btn2{
+  background: #fe8315;
+  color: black;
+}
+.profile-btn2:hover{
+  background: black;
+  color: white;
+}
+
+
+/* Admin dashboard CSS */
+.dash-menu{
+  color: white;
+}
+.dash-menu:hover{
+  background: #fe8315;
+  border-radius: 7px;
+  transition: 0.5s;
+}
+.dash-icon{
+  font-size: 20px;
+}
+
+.dash-icon2{
+  font-size: 40px;
+}
+
+/* // admin register users css */
+
+.edit-icon{
+  color: #000;
+  font-size: 22px;
+
+}
+.edit-icon:hover{
+  color: #fe8315;
+  transform: 0.5s;
+}
+.delet-icon{
+  color: #fe8315;
+  font-size: 22px;
+
+}
+.delet-icon:hover{
+  color: #000;
+  transition: 0.5s;
+
+}
+.search-icon{
+  background-color: #000;
+  color: white;
+  border: 2px solid black;
+
+}
+.search-icon:hover{
+  background-color: #fe8315;
+  border: 2px solid black;
+  color: black;
+  transition: 0.5s;
+
+}
+.search-bdr{
+  border: 2px solid black;
+}
+.search-bdr:focus{
+  border: 2px solid black;
+}
+.title-bg{
+  background-color: #000;
+  color: white;
+  border-radius: 8px;
+}
+.title-icon{
+  font-size: 40px;
+}
+
+.admin-btn1{
+  background: black;
+  color: white;
+  transition: 0.4s;
+}
+.admin-btn1:hover{
+  background-color: #fe8315;
+  color: black;
+  
+}
+.admin-btn2{
+  background-color: #fe8315;
+  color: black;
+  transition: 0.4s;
+}
+.admin-btn2:hover{
+  background-color: #000;
+  color: white;
+  
+}
+.table-bg{
+  background-color: #f89f51;
+}
+
+
+/* chatbot css start */
+@import url('https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,100..900&display=swap');
+.inter{
+  font-family: "Inter", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: weight;
+  font-style: normal;
+}
+
+.chatbot-bg{
+  width: 100%;
+  min-height: 100vh;
+  /* background: linear-gradient(#f89f51, #f8b87f); */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.chatbot-popup{
+    position: relative;
+    width: 420px;
+    overflow: hidden;
+    background-color: #f4f4f6;
+    border-radius: 15px;
+    box-shadow: 0 0 128px rgba(0, 0, 0, 0.1), 0 32px 64px -48px rgba(0, 0, 0, 0.5);
+}
+
+.chatbot-popup .chatbot-header{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px 22px;
+  background-color: #fe8315;
+}
+
+.chatbot-header .header-info{
+  display: flex;
+  gap: 10px;
+  align-items: center  ;
+}
+.header-info svg{
+  height: 35px;
+  width: 35px;
+  background: #f4f4f6;
+  padding: 6px;
+  fill: #fe8315;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.header-info .logo-text{
+  color: #f4f4f6;
+  font-size: 1.31rem;
+  font-weight: 600;
+}
+.chatbot-header button{
+   height: 40px;
+   width: 40px;
+   border: none;
+   outline: none;
+   transition: 0.7s;
+   color: #fe8315;
+   cursor: pointer;
+   border-radius: 50%;
+}
+.chatbot-header button:hover{
+  background-color: black;
+  color: white;
+
+}
+
+.chatbot-body {
+  padding: 25px;
+  height: 450px;
+  overflow-y: auto;
+  overflow-y: auto;
+  margin-bottom: 82px;
+  scrollbar-width: thin;
+  scrollbar-color: black transparent;
+   
+}
+
+.chatbot-body .message{
+  display: flex;
+  gap: 11px;
+  align-items: center;
+
+}
+
+
+.chatbot-body .bot-message svg{
+   height: 35px;
+  width: 35px;
+  background: #fe8315;
+  padding: 6px;
+  fill:  black;
+  border-radius: 50%;
+  flex-shrink: 0;
+
+}
+.chatbot-body .message .message-text{
+  padding: 13px , 16px;
+  max-width: 75%;
+  color: white;
+  word-wrap: break-word;
+
+}
+.chatbot-body .bot-message .message-text{
+  background-color: black;
+  border-radius: 13px, 13px, 13px, 3px;
+}
+
+.chatbot-body .user-message {
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.chatbot-body .user-message .message-text{
+  background-color: #fe8315;
+  border-radius: 13px, 13px, 3px, 13px;
+}
+
+.chatbot-footer{
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background-color: black;
+  padding: 15px, 22px, 20px;
+
+}
+
+.chatbot-footer .chatbot-form{
+  display: flex;
+  align-items: center;
+  background-color: #fff;
+  outline: 1px solid #3f3fd4;
+  justify-content: space-between;
+  padding-left: 10px ;
+  padding-right: 10px;
+  border-radius: 32px;
+}
+
+.chatbot-footer .chatbot-form:focus-within{
+  outline: 2px solid #fe8315;
+}
+
+.chatbot-form .message-input{
+  border: none;
+  outline: none;
+  background: none;
+  height:  47px;
+  padding: 0, 17px;
+  
+}
+
+.chatbot-form button{
+  height: 35px;
+  width:  35px;
+  background-color: #fe8315;
+  display: none;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  flex-shrink: 0;
+  outline: none;
+  cursor: pointer;
+  border: 1 px solid white;
+  transition: 0,2s ease;
+
+}
+
+.chatbot-form button:hover{
+  background-color: white;
+  color: black;
+  border: 1px solid  black;
+  transition: 0.8s;
+}
+
+.chatbot-form .message-input:valid~button{
+  display: block;
+}
+/* chatbot css end */
+
