@@ -4,27 +4,6 @@ import Footer from '../Components/Footer';
 import NewOrderForm from '../Components/NewOrderForm';
 
 
-
-
-
-// #region constants
-
-// #endregion
-
-// #region styled-components
-
-// #endregion
-
-// #region functions
-
-// #endregion
-
-// #region component
-
-
-/**
- * 
- */
 const AcInstallation = () => {
     return <>
      <Navbar firstName="GB-Home-" lastName="Services"/>
@@ -43,52 +22,7 @@ const AcInstallation = () => {
                 <h5 className='mt-md-5 main-paragraph mt-2'>GB-Home Services is your go-to solution for any AC repair and AC installation services. Our certified and highly trained in-house staff have more than 8+ years of experience in repairing any inverter AC, non-inverter AC, and floor standing AC.</h5>
                 
             </div>
-            {/* <div className="col-md-4 py-4">
-                <form action="" className='bg-black text-white py-5 px-4 rounded-3'>
-                    <h2 className='sc-color text-center fw-bold main-paragraph'>Please Fill the Form below</h2>
-                    <h5 className='main-paragraph'>You will recive a call in few minutes to guide you regarding your query.</h5>
-                    <input type="text" placeholder='Name'  className="order-form-input w-100 form-control me-2 p-2 mb-md-0 mb-3 border mt-3"/>
-                    <input type="text" placeholder='03xxxxxxxx'  className="order-form-input w-100 form-control me-2 p-2 mb-md-0 mb-3 border mt-3"/>
-                    <input type="text" placeholder='City'  className="order-form-input w-100 form-control me-2 p-2 mb-md-0 mb-3 border mt-3"/>
-                    <input type="text" placeholder='Address'  className="order-form-input w-100 form-control me-2 p-2 mb-md-0 mb-3 border mt-3"/>
-                    <label htmlFor="" className="fw-bold mt-3 mb-3">Choose your AC Type</label>
-                    <div className='d-flex justify-content-between'>
-                        <div className='border border-rounde radio-btn'>
-                           <label htmlFor="" className="fw-bold"><input type="radio" name='actype' /> Invertor</label>
-                        </div>
-                        <div className='border border-rounde radio-btn'>
-                           <label htmlFor="" className="fw-bold"><input type="radio" name='actype' /> non-Invertor</label>
-                        </div>
-                      
-                    </div>
-
-                    <label htmlFor="" className="fw-bold mt-3 mb-3">Choose your Service Type</label>
-                    <div className='d-flex justify-content-between'>
-                        <div className='border border-rounde radio-btn'>
-                           <label htmlFor="" className="fw-bold"><input type="radio" name='actype' /> <br /> Repair</label>
-                        </div>
-                        <div className='border border-rounde radio-btn'>
-                           <label htmlFor="" className="fw-bold"><input type="radio" name='actype' />  <br /> Visit</label>
-                        </div>
-                       
-                      
-                    </div>
-                    <div className='d-flex justify-content-between mt-3'>
-                    <div className='border border-rounde radio-btn'>
-                           <label htmlFor="" className="fw-bold"><input type="radio" name='actype' />   <br />Installation</label>
-                   </div>
-                        <div className='border border-rounde radio-btn'>
-                           <label htmlFor="" className="fw-bold"><input type="radio" name='actype' /> <br /> Service</label>
-                        </div>
-                    </div>
-                    <div>
-                    <label htmlFor="" className="fw-bold"><br />Explain your problem (optional)</label>
-                    <textarea class="form-control mt-md-3 " id="exampleFormControlTextarea1" rows="5"></textarea>
-                    </div>
-                    <button className='btn order-form-btn fw-bold w-100 mt-3'>Confirm Order</button>
-                </form>
-
-             </div>......... */}
+           
              <div className="col-md-4 py-4">
              {/* <OrderForm opt1="AC" opt2="DC"/> */}
                <NewOrderForm/>

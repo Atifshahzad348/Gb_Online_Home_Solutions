@@ -17,6 +17,9 @@ router.route("/callRequest").get(authMiddleware, adminMiddleware,  adminControll
 router.route("/callRequest/delete/:id").delete(authMiddleware, adminMiddleware, adminControllers.deleteCallRequesById);
 router.route("/clientorders").get(authMiddleware, adminMiddleware,  adminControllers.getAllClientOrders);
 router.route("/clientorders/delete/:id").delete(authMiddleware, adminMiddleware, adminControllers.deleteOrderById);
+// ADD THESE NEW ROUTES FOR ORDER MANAGEMENT
+router.route("/orders/:orderId").patch(authMiddleware, adminMiddleware, adminControllers.updateOrderStatusAndPrice);
+router.route("/orders/:orderId").get(authMiddleware, adminMiddleware, adminControllers.getOrderById);
 
 // professionals
 router.route('/professionals').get(authMiddleware, adminMiddleware, adminControllers.getALlProfessionals );

@@ -1,6 +1,7 @@
 import React from 'react'
 import Sidebar from '../Components/Sidebar'
-import Ordershow from '../Components/Ordershow'
+// import Ordershow from '../Components/Ordershow'
+import CartOrders from '../Components/CartOrders'
 
 
 export default function OrdersPage() {
@@ -9,7 +10,8 @@ export default function OrdersPage() {
         
       <div className='row'>
         <Sidebar/>
-        <Ordershow/>
+        <CartOrders/>
+        {/* <Ordershow/> */}
       </div>
        
        

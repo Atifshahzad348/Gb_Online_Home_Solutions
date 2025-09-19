@@ -1,17 +1,23 @@
-// const express = require('express');
-// const router = express.Router();
-// const imageupload = require("../controllers/image-controller");
-
-// router.route("/single", ).post(imageupload);
-
-// module.exports = router;
-
-const express = require("express");
+const express = require('express');
 const router = express.Router();
-const upload = require("../Middleware/img-middleware"); // Import Multer middleware
-const imageupload = require("../controllers/image-controller");
+const upload = require("../Middleware/simple-upload");
 
-// Apply Multer middleware to the route
-router.route("/single").post(upload.single("image"), imageupload); // Fixed route structure
+// Test upload route
+router.post("/upload", upload.single('image'), (req, res) => {
+    try {
+        if (!req.file) {
+            return res.status(400).json({ success: false, msg: "No file uploaded" });
+        }
+        
+        res.status(200).json({
+            success: true,
+            msg: "File uploaded successfully",
+            imageUrl: `/uploads/${req.file.filename}`
+        });
+    } catch (error) {
+        console.error("Upload error:", error);
+        res.status(500).json({ success: false, msg: "Server error during upload" });
+    }
+});
 
 module.exports = router;

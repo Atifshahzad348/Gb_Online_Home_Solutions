@@ -3,18 +3,28 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { Authprovider } from './store/auth';
- import { ToastContainer  } from 'react-toastify';
-
+import { AuthProvider } from './store/auth';
+import { ToastContainer  } from 'react-toastify';
+import { ServicesProvider } from './store/services'; //
+import { CategoryServicesProvider } from './store/category-services'; // 
+import { ProductsProvider } from './store/products';
+import {CartProvider} from './store/cart';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <Authprovider>
-    <React.StrictMode>
-      <App />
-       <ToastContainer />
-    </React.StrictMode>
-    
-  </Authprovider>
+  <AuthProvider>
+     <ServicesProvider>
+      <CategoryServicesProvider> 
+        <ProductsProvider>
+          <CartProvider>
+            <React.StrictMode>
+              <App />
+              <ToastContainer />
+            </React.StrictMode>
+          </CartProvider>
+         </ProductsProvider>
+    </CategoryServicesProvider>
+    </ServicesProvider>
+  </AuthProvider>
 );
 
 // If you want to start measuring performance in your app, pass a function

@@ -35,6 +35,13 @@
   background-color: rgb(253, 251, 251);
   color: black;
 }
+.nav-icon{
+  color: #000;
+  transition: 0.8s;
+}
+.nav-icon:hover{
+  color: #fe8315;
+}
 .navbar-titles{
   border-bottom: 3px solid white;
 }
@@ -44,8 +51,43 @@
 .primary-color{
   color: #fe8315;
 }
+.orange-border{
+  border: 1px solid #fe8315;
+}
+.orange-border:focus{
+     border: 1px solid #fe8315;
+}
 .primary-bg{
   background-color: #fe8315;
+}
+.orange-bg{
+  background-color: #fe8315;
+}
+.black-bg{
+  background-color: #000;
+  color: white;
+}
+.black-btn{
+  background: #000;
+  color: white;
+  transition: 0.8s;
+  border: none;
+}
+.black-btn:hover{
+  background-color: #fe8315;
+  color: white;
+  border: none;
+}
+.orange-btn{
+  background-color: #fe8315;
+  color: white;
+  transition: 0.8s;
+  border: 2px solid white;
+}
+.orange-btn:hover{
+  background-color: #000;
+  color: white;
+  border: 2px solid white;
 }
 .secoundry-bg{
   background-color: black;
@@ -62,9 +104,7 @@
 .sc-color{
   color: #fe8315;
 }
-/* .primary-color:hover{
-  color: black;
-} */
+
 .secoundary-color{
   color: black;
 }
@@ -490,8 +530,8 @@
   
 }
 .log-out-btn:hover{
-  background-color: white;
-  color: rgb(54, 52, 52);
+  background-color: black;
+  color: white;
 }
 .log-out-icon{
   color: white;
@@ -789,5 +829,141 @@
 .chatbot-form .message-input:valid~button{
   display: block;
 }
-/* chatbot css end */
 
+
+
+
+
+/* service cards css */
+
+.service-card-img {
+  height: 200px;
+  object-fit: cover;
+}
+
+.card {
+  transition: transform 0.3s ease;
+}
+
+/* .card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+} */
+
+.service-btn {
+  background-color: #0d6efd;
+  color: white;
+  font-weight: bold;
+}
+
+.service-btn:hover {
+  background-color: #0b5ed7;
+  color: white;
+}
+
+/* Loading animation */
+.spinner-border {
+  width: 3rem;
+  height: 3rem;
+}
+
+
+.category-option{
+  background-color: #000;
+}
+.category-option:focus-visible{
+  background-color: #fe8315;
+}
+.custom-label {
+    color: #fe8315;
+    font-weight: 500;
+    font-size: 14px;
+}
+.custom-checkbox{
+color: #fe8315;
+}
+.form-switch{
+  color: #fe8315;
+}
+
+
+/* // product deatils page css */
+/* Product Detail Page Styles */
+.product-image-container {
+  position: relative;
+}
+
+.thumbnail-container {
+  overflow-x: auto;
+  padding-bottom: 10px;
+}
+
+.thumbnail-container::-webkit-scrollbar {
+  height: 4px;
+}
+
+.thumbnail-container::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.thumbnail-container::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 2px;
+}
+
+.thumbnail-container::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.img-thumbnail {
+  transition: all 0.3s ease;
+}
+
+.img-thumbnail:hover {
+  transform: scale(1.05);
+}
+
+.img-thumbnail.active {
+  border: 2px solid #007bff !important;
+}
+
+
+
+.orange-bg {
+  background-color: #ff6b00 !important;
+  color: white !important;
+}
+
+.black-bg {
+  background-color: #000 !important;
+  color: white !important;
+}
+
+/* Rating stars */
+.text-warning .filled {
+  color: #ffc107;
+}
+
+.text-warning .empty {
+  color: #e0e0e0;
+}
+
+/* Breadcrumb */
+.breadcrumb {
+  background: transparent;
+  padding: 0;
+  margin-bottom: 0;
+}
+
+.breadcrumb-item a {
+  color: #6c757d;
+  text-decoration: none;
+}
+
+.breadcrumb-item a:hover {
+  color: #ff6b00;
+}
+
+.breadcrumb-item.active {
+  color: #000;
+}

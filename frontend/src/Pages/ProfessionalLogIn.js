@@ -1,3 +1,5 @@
+
+
 import React from 'react';
 import Navbar from '../Components/Navbar';
 import { useState } from 'react';
@@ -5,7 +7,7 @@ import {useForm} from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../store/auth';
 import {toast } from 'react-toastify';
-import { FaIdCard } from 'react-icons/fa';
+import { FaIdCard, FaEye, FaEyeSlash } from 'react-icons/fa';
 
 const ProfessionalLogIn = (props) => {
     const navigate = useNavigate();
@@ -14,6 +16,7 @@ const ProfessionalLogIn = (props) => {
         cnic: "",
         password: ""
     });
+    const [showPassword, setShowPassword] = useState(false);
 
     //handle input 
     const handleInput =(event)=>{
@@ -23,6 +26,11 @@ const ProfessionalLogIn = (props) => {
             ...user,
             [name]: value
         })
+    }
+
+    // Toggle password visibility
+    const togglePasswordVisibility = () => {
+        setShowPassword(!showPassword);
     }
 
     //form validation
@@ -70,7 +78,9 @@ const ProfessionalLogIn = (props) => {
                             <div className="mb-3">
                                 <label htmlFor="cnic" className="form-label">CNIC Number</label>
                                 <div className="input-group">
-                                   
+                                    <span className="input-group-text black-bg" style={{ borderColor: 'black' }}>
+                                        <FaIdCard />
+                                    </span>
                                     <input 
                                         type="text" 
                                         {...register("cnic", {
@@ -80,7 +90,7 @@ const ProfessionalLogIn = (props) => {
                                                 message: "CNIC must be 13 digits without dashes"
                                             }
                                         })} 
-                                        className="form-control w-100 input-height shadow-none" 
+                                        className="form-control input-height shadow-none" 
                                         name="cnic" 
                                         id="cnic" 
                                         value={user.cnic} 
@@ -92,23 +102,37 @@ const ProfessionalLogIn = (props) => {
                                 {errors.cnic && <div className="text-danger">{errors.cnic.message}</div>}
                                 <div className="form-text">Enter 13-digit CNIC without dashes</div>
                             </div>
+                            
                             <div className="mb-3">
                                 <label htmlFor="password" className="form-label">Password</label>
-                                <input 
-                                    type="password" 
-                                    {...register("password", {required: "Password is required"})} 
-                                    className="form-control w-100 input-height shadow-none" 
-                                    autoComplete="current-password" 
-                                    value={user.password} 
-                                    onChange={handleInput} 
-                                    id="password" 
-                                />
+                                <div className="input-group">
+                                    <input 
+                                        type={showPassword ? "text" : "password"} 
+                                        {...register("password", {required: "Password is required"})} 
+                                        className="form-control input-height shadow-none" 
+                                        autoComplete="current-password" 
+                                        value={user.password} 
+                                        onChange={handleInput} 
+                                        id="password" 
+                                        placeholder="Enter your password"
+                                    />
+                                    <button 
+                                        className="btn black-bg" 
+                                        type="button" 
+                                        onClick={togglePasswordVisibility}
+                                        style={{ borderColor: 'black' }}
+                                    >
+                                        {showPassword ? <FaEyeSlash /> : <FaEye />}
+                                    </button>
+                                </div>
                                 {errors.password && <div className="text-danger">{errors.password.message}</div>}
                             </div>
+                            
                             <div className="mb-3 form-check">
                                 <label className="form-check-label me-4 ms-md-auto" htmlFor="exampleCheck1">I don't have an account :</label>
                                 <a href="/professional-signup" className='text-decoration-none fw-bold'>Sign Up</a>
                             </div>
+                            
                             <button type="submit" className="nav-btn btn w-100 fw-bold">Log in</button>
                         </form>
                     </div>

@@ -3,6 +3,10 @@ import {Link} from "react-router-dom"
 import PropTypes from "prop-types"
 import { useAuth } from '../store/auth';
 
+import { FaCircleUser } from "react-icons/fa6";
+
+import { SiImessage } from "react-icons/si";
+import { AiFillAppstore } from "react-icons/ai";
 
 
 
@@ -12,9 +16,10 @@ const Navbar = (props) => {
    <nav className="nav-bg navbar navbar-expand-lg shadow-lg py-2  px-md-4 mb-md-4 mb-2">
   <div className="container-fluid">
   {/* <a className="navbar-brand me-5 fw-bolder" href="/"><img src="../Fypimgs/logo.png" alt="" className='logo img-fluid' /></a> */}
-    <a className="navbar-brand me-5 fw-bolder" href="/"><span className='secoundary-color'>{props.firstName}</span><span className='primary-color'>{props.lastName}</span></a>
-    <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
-      <span className="navbar-toggler-icon"></span>
+    <a className="navbar-brand me-5 fw-bolder" href="/"><span className='orange-color'>{props.firstName}</span><span className='primary-color'>{props.lastName}</span></a>
+    <button className="navbar-toggler menu-icon" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+      {/* <span className="navbar-toggler-icon"></span> */}
+      <AiFillAppstore className='text-primary' />
     </button>
     <div className="collapse navbar-collapse" id="navbarScroll">
       <ul className="navbar-nav ms-auto my-2 my-lg-0 navbar-nav-scroll">
@@ -32,14 +37,14 @@ const Navbar = (props) => {
           <Link className="nav-link active fw-bold navbar-titles" to="/contact">Contact</Link>
         </li>
         <li>
-          <Link className="nav-link active fw-bold navbar-titles" to="/chatbot">Chatbot</Link>
+          <Link className="nav-link active fw-bold  ms-3" to="/chatbot"><SiImessage className='nav-icon fs-2 fs-md-3 fs-lg-2 ' /></Link>
         </li>
 
          
        
         {isLoggedIn ? (
         
-         <li> <Link className="nav-link active fw-bold navbar-titles" to="/profile">Profile</Link> </li>
+         <li> <Link className="nav-link active fw-bold " to="/profile"><FaCircleUser className='nav-icon fs-2 fs-md-3 fs-lg-2'/></Link> </li>
         
           
         ):(

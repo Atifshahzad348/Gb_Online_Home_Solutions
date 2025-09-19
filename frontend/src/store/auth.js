@@ -1,76 +1,153 @@
+
+
 import { createContext, useContext, useEffect, useState } from "react";
 
 export const AuthContext = createContext();
 
-export const Authprovider = ({children })=>{
+export const AuthProvider = ({ children }) => {
     const [token, setToken] = useState(localStorage.getItem('token'));
     const [user, setUser] = useState("");
-    const [services, setServices]= useState("");
+    const [services, setServices] = useState([]);
+    const [servicesLoading, setServicesLoading] = useState(false);
+    const [servicesError, setServicesError] = useState(null);
+    const [loading, setLoading] = useState(false);
     const AuthorizationToken = `Bearer ${token}`;
+    const API_URL = process.env.REACT_APP_BACKEND_URL || "http://localhost:5000";
 
-
-    const  storeTokenInLS =(ServerToken) =>{
+    const storeTokenInLS = (ServerToken) => {
         setToken(ServerToken);
         return localStorage.setItem("token", ServerToken);
     }
 
     let isLoggedIn = !!token;
 
-    // tackling logout functionality
-    const LogoutUser =()=>{
+    const LogoutUser = () => {
         setToken("")
         return localStorage.removeItem('token');
     }
 
-// jwt athentication - to get the currently logedin user
-const userAthentication = async() =>{
-    try {
-        const response = await fetch(`http://localhost:5000/user`, {method: "GET", headers: {Authorization: AuthorizationToken  }})
-        if(response.ok){
-            const data = await response.json();
-            // console.log("user data:", data.userData)
-            setUser(data.userData);
-
+    const userAthentication = async () => {
+        try {
+            const response = await fetch(`${API_URL}/user`, {
+                method: "GET",
+                headers: { Authorization: AuthorizationToken }
+            })
+            if (response.ok) {
+                const data = await response.json();
+                setUser(data.userData);
+            }
+        } catch (error) {
+            console.error("Error fetching user data")
         }
-    } catch (error) {
-        console.error("Error fetching user data")
     }
-}
 
-// to fetch the service data form data base
-// const getServices= async()=>{
-//      try {
-//         const response = await fetch("http://localhost:5000/api/data/service",{method: "GET", });
+    // Add this function to fetch services
+    const fetchServices = async () => {
+        setServicesLoading(true);
+        setServicesError(null);
+        try {
+            const response = await fetch(`${API_URL}/api/services`, {
+                method: "GET",
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            });
+            
+            if (response.ok) {
+                const data = await response.json();
+                setServices(data.services || data);
+                return data.services || data;
+            } else {
+                throw new Error('Failed to fetch services');
+            }
+        } catch (error) {
+            console.error("Error fetching services:", error);
+            setServicesError(error.message);
+            throw error;
+        } finally {
+            setServicesLoading(false);
+        }
+    };
 
-//         if(response.ok){
-//             const data = await response.json();
-//             console.log(data.msg);
-//             setServices(data.msg);
-//         }
+    // Add this function to get a single service by ID
+    const fetchServiceById = async (id) => {
+        try {
+            const response = await fetch(`${API_URL}/api/services/${id}`, {
+                method: "GET",
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            });
+            
+            if (response.ok) {
+                const data = await response.json();
+                return data.service || data;
+            } else {
+                throw new Error('Failed to fetch service');
+            }
+        } catch (error) {
+            console.error("Error fetching service:", error);
+            throw error;
+        }
+    };
 
+    const updateUserProfile = async (formData) => {
+        setLoading(true);
+        try {
+            const response = await fetch(`${API_URL}/api/user/profile`, {
+                method: 'PUT',
+                headers: {
+                    'Authorization': AuthorizationToken,
+                },
+                body: formData,
+            });
 
-//      } catch (error) {
-//         console.log(`services frontend error: ${error}`)
-        
-//      }
-// }
+            const data = await response.json();
 
-useEffect(()=>{
-    // getServices();
-    userAthentication();
-}, [])
+            if (response.ok) {
+                setUser(data.user);
+                localStorage.setItem('user', JSON.stringify(data.user));
+                return data;
+            } else {
+                throw new Error(data.message || 'Failed to update profile');
+            }
+        } catch (error) {
+            console.error('Profile update error:', error);
+            throw error;
+        } finally {
+            setLoading(false);
+        }
+    };
 
+    useEffect(() => {
+        userAthentication();
+    }, [])
 
-         return <AuthContext.Provider value={{ storeTokenInLS, LogoutUser, isLoggedIn, user, AuthorizationToken }}>
+    return (
+        <AuthContext.Provider value={{
+            storeTokenInLS,
+            LogoutUser,
+            isLoggedIn,
+            user,
+            AuthorizationToken,
+            updateUserProfile,
+            loading,
+            // Add these to the context value
+            services,
+            servicesLoading,
+            servicesError,
+            fetchServices,
+            fetchServiceById
+        }}>
             {children}
-         </AuthContext.Provider>
+        </AuthContext.Provider>
+    );
 }
-export const useAuth =() =>{
+
+export const useAuth = () => {
     const authContextValue = useContext(AuthContext);
-
-    if(!authContextValue){
-         throw new Error("useAuth used outside of the provider");
+    if (!authContextValue) {
+        throw new Error("useAuth used outside of the provider");
     }
-   return authContextValue;
+    return authContextValue;
 }
-

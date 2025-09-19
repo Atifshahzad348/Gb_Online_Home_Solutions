@@ -3,6 +3,7 @@ import Sidebar from '../Components/Sidebar'
 import UserProfile from '../Components/UserProfile '
 
 
+
 export default function Profile() {
   return (
     <div className='container-fluid'>
@@ -10,6 +11,7 @@ export default function Profile() {
       <div className='row'>
         <Sidebar/>
         <UserProfile/>
+        
       </div>
        
        

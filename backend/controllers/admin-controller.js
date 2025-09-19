@@ -215,5 +215,99 @@ const deleteProfessionalsById = async(req, res)=>{
 }
 
 
+// Update order status and price
+const updateOrderStatusAndPrice = async (req, res) => {
+    try {
+        const { orderId } = req.params;
+        const { status, servicePrice } = req.body;
 
-module.exports =  { getALlUsers, getAllContacts, getAllCallRequest, getAllClientOrders, deleteUserById, deleteMessageById, deleteCallRequesById,deleteOrderById, getUserbyID, updateUserByID, getALlProfessionals, deleteProfessionalsById  };
+        // Validate status
+        const validStatuses = ['pending', 'confirmed', 'in-progress', 'completed', 'cancelled'];
+        if (status && !validStatuses.includes(status)) {
+            return res.status(400).json({
+                success: false,
+                msg: "Invalid status value"
+            });
+        }
+
+        // Validate price
+        if (servicePrice !== undefined && servicePrice < 0) {
+            return res.status(400).json({
+                success: false,
+                msg: "Price cannot be negative"
+            });
+        }
+
+        const updateData = {};
+        
+        if (status) {
+            updateData.status = status;
+            // Add completed timestamp if status is 'completed'
+            if (status === 'completed') {
+                updateData.completedAt = new Date();
+            }
+        }
+
+        if (servicePrice !== undefined) {
+            updateData.servicePrice = parseFloat(servicePrice);
+        }
+
+        const order = await Order.findByIdAndUpdate(
+            orderId,
+            updateData,
+            { new: true }
+        );
+
+        if (!order) {
+            return res.status(404).json({
+                success: false,
+                msg: "Order not found"
+            });
+        }
+
+        res.status(200).json({
+            success: true,
+            msg: "Order updated successfully",
+            order: order
+        });
+
+    } catch (error) {
+        console.error("Order update error:", error);
+        res.status(500).json({
+            success: false,
+            msg: "Server error while updating order"
+        });
+    }
+};
+
+// Get single order by ID
+const getOrderById = async (req, res) => {
+    try {
+        const { orderId } = req.params;
+        const order = await Order.findById(orderId);
+        
+        if (!order) {
+            return res.status(404).json({
+                success: false,
+                msg: "Order not found"
+            });
+        }
+
+        res.status(200).json({
+            success: true,
+            order: order
+        });
+
+    } catch (error) {
+        console.error("Get order error:", error);
+        res.status(500).json({
+            success: false,
+            msg: "Server error while fetching order"
+        });
+    }
+};
+
+
+
+
+module.exports =  { getALlUsers, getAllContacts, getAllCallRequest, getAllClientOrders, deleteUserById, deleteMessageById, deleteCallRequesById,deleteOrderById, getUserbyID, updateUserByID, getALlProfessionals, deleteProfessionalsById, updateOrderStatusAndPrice, getOrderById   };

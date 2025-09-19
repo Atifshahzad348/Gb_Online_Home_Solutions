@@ -1,5 +1,6 @@
 
 
+// test code
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../store/auth';
@@ -12,107 +13,85 @@ import { RiMoneyDollarBoxFill } from "react-icons/ri";
 import { MdMedicalServices } from "react-icons/md";
 import { FaCartArrowDown } from "react-icons/fa";
 import { CiLogout } from "react-icons/ci";
+// import { useAuth } from '../store/auth';
 
 const Sidebar = () => {
-  const [isCollapsed, setIsCollapsed] = useState(false);
-  const toggleSidebar = () => {
-    setIsCollapsed(!isCollapsed);
+  
+  const [isExpanded, setIsExpanded] = useState(false);
+  const { isLoggedIn, user } = useAuth();
+
+  const toggleNavbar = () => {
+    setIsExpanded(!isExpanded);
   };
-  const {isLoggedIn} = useAuth();
+  
+ let name = user.name;
 
+ 
   return (
-    <div className={`sidebar-bg text-white col-md-3 ${isCollapsed ? 'sidebar-collapsed' : 'sidebar-expanded'}`} 
-         style={{ 
-           minHeight: '100vh', 
-           width: isCollapsed ? '80px' : '230px', 
-           transition: 'width 0.3s',
-           flex: '0 0 auto' // Prevent flex-grow
-         }}>
-      
-      <div className="d-flex flex-column h-100">
-        {/* Sidebar Header */}
-        <div className="p-3 d-flex justify-content-between align-items-center border-bottom">
-          {!isCollapsed && <h5 className="mb-0">User Name</h5>}
-          <button 
-            className="btn collapse-btn btn-sm" 
-            onClick={toggleSidebar}
-          >
-            {isCollapsed ? '→' : '←'}
-          </button>
-        </div>
-        
-        {/* Sidebar Navigation */}
-        <nav className="flex-grow-1 p-3">
-          <ul className="nav flex-column">
-            <li className="nav-item mb-2">
-              <Link to="/home" className='text-decoration-none'> 
-                <a href="#home" className="nav-link sidebar-links d-flex align-items-center fw-bold">
-                  <FaHome className='me-2 text-white sidebar-icon' />
-                  {!isCollapsed && 'Home'}
-                </a>
-              </Link>
-            </li>
-            <li className="nav-item mb-2">
-              <Link to="/Profile" className='text-decoration-none'> 
-                <a href="#home" className="nav-link sidebar-links d-flex align-items-center fw-bold">
-                  <AiFillProfile className='me-2 text-white sidebar-icon' />
-                  {!isCollapsed && 'Profile'}
-                </a>
-              </Link>
-            </li>
-            <li className="nav-item mb-2">
-              <Link className='text-decoration-none'>
-                <a href="#dashboard" className="nav-link sidebar-links d-flex align-items-center fw-bold">
-                  <MdMedicalServices className='me-2 text-white sidebar-icon' />
-                  {!isCollapsed && 'Services'}
-                </a>
-              </Link>
-            </li>
-            <li className="nav-item mb-2">
-              <Link to="/orderpage"className='text-decoration-none'>
-                <a href="#orders" className="nav-link sidebar-links d-flex align-items-center fw-bold">
-                  <AiFillProduct className='me-2 text-white sidebar-icon' />
-                  {!isCollapsed && 'Orders'}
-                </a>
-              </Link> 
-            </li>
-            <li className="nav-item mb-2">
-              <Link to="/payment" className='text-decoration-none'>
-                <a href="#products" className="nav-link sidebar-links d-flex align-items-center fw-bold">
-                  <RiMoneyDollarBoxFill className='me-2 text-white sidebar-icon'/>
-                  {!isCollapsed && 'Payment'}
-                </a>
-              </Link>
-            </li>
-            <li className="nav-item mb-2">
-              <Link className='text-decoration-none'>
-                <a href="#customers" className="nav-link sidebar-links d-flex align-items-center fw-bold">
-                  <FaCartArrowDown className='me-2 text-white sidebar-icon'/>
-                  {!isCollapsed && 'Cart'}
-                </a>
-              </Link>
-            </li>
 
-            <div className="d-flex align-items-center">
-              {!isCollapsed && (
-                <div>
-                  <div className="">
-                    <Link to="/logout">
-                      <button className='btn log-out-btn me-md-3 ms-md-3 me-0 ms-0 fw-bold'>
-                        <CiLogout className='me-1 fw-bold' /> Log out
-                      </button>
-                    </Link>
-                  </div>
-                </div>
-              )}
-            </div>
-          </ul>
-        </nav>
+    <nav className="navbar navbar-expand-lg navbar-light bg-light shadow-sm mb-3">
+      <div className="container-fluid">
+        <h2  className="navbar-brand fw-bold primary-color me-5 ms-3">{name}</h2>
         
-        {/* Sidebar Footer */}
-        <div className="p-3 border-top"></div>
+        <button 
+          className="navbar-toggler" 
+          type="button" 
+          onClick={toggleNavbar}
+          aria-controls="navbarContent"
+          aria-expanded={isExpanded}
+          aria-label="Toggle navigation"
+        >
+          <span className="navbar-toggler-icon"></span>
+        </button>
+        
+        <div className={`collapse navbar-collapse ${isExpanded ? 'show' : ''}`} id="navbarContent">
+          <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+            <li className="nav-item">
+              <Link to="/home" className="nav-link d-flex align-items-center">
+                <FaHome className="me-1" />
+                <span>Home</span>
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link to="/Profile" className="nav-link d-flex align-items-center">
+                <AiFillProfile className="me-1" />
+                <span>Profile</span>
+              </Link>
+            </li>
+           
+            <li className="nav-item">
+              <Link to="/orderpage" className="nav-link d-flex align-items-center">
+                <AiFillProduct className="me-1" />
+                <span>Orders</span>
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link to="/payment" className="nav-link d-flex align-items-center">
+                <RiMoneyDollarBoxFill className="me-1" />
+                <span>Payment</span>
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link to="/cart" className="nav-link d-flex align-items-center">
+                <FaCartArrowDown className="me-1" />
+                <span>Cart</span>
+              </Link>
+            </li>
+          </ul>
+          
+          <div className="d-flex">
+            {isLoggedIn && (
+              <Link to="/logout"  class="link-underline link-underline-opacity-0 me-3">
+                <button className="btn log-out-btn d-flex align-items-center text-style-none">
+                  <CiLogout className="me-1" />
+                  <span>Log out</span>
+                </button>
+              </Link>
+            )}
+          </div>
+        </div>
       </div>
-    </div>
+    </nav>
   );
 };
 

@@ -1,3 +1,6 @@
+
+
+
 // test code
 
 import Navbar from "../Components/Navbar";
@@ -7,6 +10,7 @@ import { useForm } from 'react-hook-form';
 import { useAuth } from "../store/auth";
 import { useNavigate } from "react-router-dom";
 import { toast } from 'react-toastify';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
 const ProfessionalSignUp = () => {
   const [professional, setProfessional] = useState({
@@ -23,6 +27,7 @@ const ProfessionalSignUp = () => {
     password: "" // FIXED: Changed to lowercase 'p' to match backend
   });
 
+  const [showPassword, setShowPassword] = useState(false);
   const { storeTokenInLS } = useAuth();
   const navigate = useNavigate();
 
@@ -34,6 +39,11 @@ const ProfessionalSignUp = () => {
       [name]: value
     });
   };
+
+  // Toggle password visibility
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  }
 
   const {
     register,
@@ -278,18 +288,29 @@ const ProfessionalSignUp = () => {
 
               <div className="col-md-6 mb-3">
                 <label htmlFor="password" className="form-label">Password</label>
-                <input
-                  type="password"
-                  {...register("password", {
-                    required: "Password is required",
-                  })}
-                  name="password"
-                  className="form-control w-100 input-height shadow-none"
-                  autoComplete="new-password"
-                  id="password"
-                  value={professional.password}
-                  onChange={handleInput}
-                />
+                <div className="input-group">
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    {...register("password", {
+                      required: "Password is required",
+                    })}
+                    name="password"
+                    className="form-control input-height shadow-none"
+                    autoComplete="new-password"
+                    id="password"
+                    value={professional.password}
+                    onChange={handleInput}
+                    placeholder="Enter your password"
+                  />
+                  <button 
+                    className="btn black-bg" 
+                    type="button" 
+                    onClick={togglePasswordVisibility}
+                    style={{ borderColor: 'black' }}
+                  >
+                    {showPassword ? <FaEyeSlash /> : <FaEye />}
+                  </button>
+                </div>
                 {errors.password && <div className="text-danger">{errors.password.message}</div>}
               </div>
 
