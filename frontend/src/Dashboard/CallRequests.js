@@ -10,7 +10,7 @@ import { FaBorderAll } from "react-icons/fa";
 import { FaMoneyCheckDollar } from "react-icons/fa6";
 import { MdOutlineEngineering } from "react-icons/md";
 import CallRequestManagment from "../Components/CallRequestManagment";
-
+import { MdLocalShipping } from "react-icons/md";
 
 
 
@@ -31,6 +31,7 @@ const CallRequests = () => {
             <li className="nav-item dash-menu mb-2"><Link to="/admin/earnings" className="nav-link text-white"><FaMoneyCheckDollar className="me-2 my-0 py-0 dash-icon" /> Earnings</Link></li>
            <li className="nav-item dash-menu mb-2"><Link to="/admin/addproducts" className="nav-link text-white"><FaMoneyCheckDollar className="me-2 my-0 py-0 dash-icon" />Add Products</Link></li>
            <li className="nav-item dash-menu mb-2"><Link to="/admin/availableproducts" className="nav-link text-white"><FaMoneyCheckDollar className="me-2 my-0 py-0 dash-icon" />Available Products</Link></li>
+            <li className="nav-item dash-menu mb-2"><Link to="/admin/productOrders" className="nav-link text-white"><MdLocalShipping className="me-2 my-0 py-0 dash-icon" />Products Orders</Link></li>
            <li className="nav-item dash-menu mb-2"><Link to="/admin/addServices" className="nav-link text-white"><FaMoneyCheckDollar className="me-2 my-0 py-0 dash-icon" />Add Services</Link></li>
            <li className="nav-item dash-menu mb-2"><Link to="/admin/availableservices" className="nav-link text-white"><FaMoneyCheckDollar className="me-2 my-0 py-0 dash-icon" />Available Services</Link></li>
           </ul>

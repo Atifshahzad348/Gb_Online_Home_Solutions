@@ -16,6 +16,8 @@ const uploadRoute = require("./Routes/upload-router");
 const userRoute = require("./Routes/user-router"); // ADD THIS LINE
 const serviceRoute = require("./Routes/service-router"); // service router
 const productRoute = require("./Routes/product-router");
+const orderRoutes = require('./Routes/order-routes');
+// const orderRoutes = require('./Routes/order-routes');
 
 const connectDb = require("./utils/db");
 
@@ -48,6 +50,7 @@ app.use("/api/admin", adminRoute);
 app.use("/api/user", userRoute); // ADD THIS LINE
 app.use("/api/services", serviceRoute); // add this line
 app.use("/api/products", productRoute);
+app.use('/api/order', orderRoutes);
 
 // Start status monitoring
 setInterval(checkOnlineStatus, 5 * 60 * 1000);

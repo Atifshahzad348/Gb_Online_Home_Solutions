@@ -1,8 +1,4 @@
 
-
-
-// test code
-
 import Navbar from "../Components/Navbar";
 import { Link } from "react-router-dom";
 import React, { useState } from 'react';
@@ -352,3 +348,7 @@ const ProfessionalSignUp = () => {
 };
 
 export default ProfessionalSignUp;
+
+
+
+

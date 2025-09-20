@@ -6,6 +6,8 @@ const Professional = require("../models/professional-model");
 const bcrypt = require('bcrypt');
 const ContactSchema = require("../models/contact_us_model");
 const Order = require("../models/book-order-model");
+const fs = require('fs');
+const path = require('path');
 
 // Home logic
 const home = async (req, res) => {
@@ -108,15 +110,73 @@ const user = async (req, res) => {
 };
 
 // Professional registration
+// const professionalRegister = async (req, res) => {
+//     try {
+//         const { name, cnic, contact1, contact2, profession, specialization, experience, address, city, permenentAdress, password } = req.body;
+//         const userExist = await Professional.findOne({ cnic });
+
+//         if (userExist) {
+//             return res.status(400).json({ success: false, msg: "Professional already exists" });
+//         }
+
+//         const professional = new Professional({
+//             name,
+//             cnic,
+//             contact1,
+//             contact2,
+//             profession,
+//             specialization,
+//             experience,
+//             address,
+//             city,
+//             permenentAdress,
+//             password
+//         });
+
+//         await professional.save();
+//         const token = await professional.generateToken();
+
+//         res.status(201).json({
+//             msg: "Professional registration successful",
+//             token,
+//             userId: professional._id.toString()
+//         });
+
+//     } catch (error) {
+//         console.log("Error in professionalRegister:", error);
+//         res.status(500).json({ error: "Server error during registration" });
+//     }
+// };
+
+// _______________________________________test code
 const professionalRegister = async (req, res) => {
     try {
         const { name, cnic, contact1, contact2, profession, specialization, experience, address, city, permenentAdress, password } = req.body;
+        
+        // Check if professional already exists
         const userExist = await Professional.findOne({ cnic });
-
         if (userExist) {
             return res.status(400).json({ success: false, msg: "Professional already exists" });
         }
 
+        // Handle file uploads
+        let profileImage = '';
+        let cnicFrontImage = '';
+        let cnicBackImage = '';
+
+        if (req.files) {
+            if (req.files.profileImage) {
+                profileImage = req.files.profileImage[0].filename;
+            }
+            if (req.files.cnicFrontImage) {
+                cnicFrontImage = req.files.cnicFrontImage[0].filename;
+            }
+            if (req.files.cnicBackImage) {
+                cnicBackImage = req.files.cnicBackImage[0].filename;
+            }
+        }
+
+        // Create new professional
         const professional = new Professional({
             name,
             cnic,
@@ -128,7 +188,10 @@ const professionalRegister = async (req, res) => {
             address,
             city,
             permenentAdress,
-            password
+            password,
+            profileImage,
+            cnicFrontImage,
+            cnicBackImage
         });
 
         await professional.save();
@@ -137,14 +200,40 @@ const professionalRegister = async (req, res) => {
         res.status(201).json({
             msg: "Professional registration successful",
             token,
-            userId: professional._id.toString()
+            userId: professional._id.toString(),
+            profileImage: professional.profileImage
         });
 
     } catch (error) {
         console.log("Error in professionalRegister:", error);
+        
+        // Clean up uploaded files if there was an error
+        if (req.files) {
+            Object.values(req.files).forEach(fileArray => {
+                fileArray.forEach(file => {
+                    const filePath = path.join('uploads/professionals/', file.filename);
+                    if (fs.existsSync(filePath)) {
+                        fs.unlinkSync(filePath);
+                    }
+                });
+            });
+        }
+        
         res.status(500).json({ error: "Server error during registration" });
     }
 };
+// test code_________________________________________
+
+
+
+
+
+
+
+
+
+
+
 
 // Professional login
 const professionallogin = async (req, res) => {

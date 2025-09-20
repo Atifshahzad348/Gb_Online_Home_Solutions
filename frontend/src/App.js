@@ -42,6 +42,7 @@ import Available_services from "./Dashboard/Available_services";
 import Addproducts from "./Dashboard/Addproducts";
 import ProductDetail from './Pages/ProductDetail';
 import AvailableProducts from "./Dashboard/AvailableProducts";
+import Product_orders from "./Dashboard/Product_orders";
 
 
 // Create a wrapper component for activity monitoring
@@ -120,6 +121,7 @@ function App() {
             <Route path="/admin/addServices" element={<AddServices/>} />
             <Route path="/admin/addproducts" element={<Addproducts/>} />
             <Route path="/admin/availableproducts" element={<AvailableProducts/>} />
+            <Route path="/admin/productOrders" element={<Product_orders />} />
             <Route path="/product/:id" element={<ProductDetail />} />
             <Route path="/admin/availableservices" element={<Available_services/>} />
             <Route path="/service/:id" element={<ServiceDetail />} />

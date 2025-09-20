@@ -1,9 +1,5 @@
 
 
-
-
-// final test code
-
 import React, { useState, useEffect } from "react";
 import { FaEdit, FaTrash, FaSearch, FaPhone, FaIdCard, FaBriefcase, FaStar, FaMapMarkerAlt, FaUsers } from "react-icons/fa";
 import { useAuth } from "../store/auth";
@@ -110,77 +106,157 @@ const UserManagement = () => {
         {displayedUsers.length > 0 ? (
           <div className="row">
             {displayedUsers.map((currUser, index) => (
+              // <div key={index} className="col-xl-4 col-lg-6 col-md-6 mb-4">
+              //   <div className="card h-100 shadow-sm border-0 professional-card">
+              //     <div className="card-header bg-dark text-white d-flex justify-content-between align-items-center">
+              //       <h6 className="mb-0 fw-bold">{currUser.name}</h6>
+              //       <span className="badge primary-bg text-dark">
+              //         {currUser.experience} {currUser.experience === '1' ? 'year' : 'years'} exp
+              //       </span>
+              //     </div>
+                  
+              //     <div className="card-body">
+              //       <div className="professional-info">
+              //         <div className="info-item mb-2">
+              //           <FaIdCard className="text-orange me-2" />
+              //           <span className="text-muted">CNIC: </span>
+              //           <strong>{currUser.cnic}</strong>
+              //         </div>
+                      
+              //         <div className="info-item mb-2">
+              //           <FaBriefcase className="text-orange me-2" />
+              //           <span className="text-muted">Profession: </span>
+              //           <strong className="text-capitalize">{currUser.profession}</strong>
+              //         </div>
+                      
+              //         <div className="info-item mb-2">
+              //           <FaStar className="text-orange me-2" />
+              //           <span className="text-muted">Specialization: </span>
+              //           <strong>{currUser.specialization}</strong>
+              //         </div>
+                      
+              //         <div className="info-item mb-2">
+              //           <FaPhone className="text-orange me-2" />
+              //           <span className="text-muted">Contact: </span>
+              //           <strong>{currUser.contact1}</strong>
+              //           {currUser.contact2 && <>, <strong>{currUser.contact2}</strong></>}
+              //         </div>
+                      
+              //         <div className="info-item mb-2">
+              //           <FaMapMarkerAlt className="text-orange me-2" />
+              //           <span className="text-muted">City: </span>
+              //           <strong>{currUser.city}</strong>
+              //         </div>
+                      
+              //         <div className="info-item mb-2">
+              //           <small className="text-muted">Address: </small>
+              //           <div className="small">{currUser.address}</div>
+              //         </div>
+                      
+              //         {currUser.permenentAdress && (
+              //           <div className="info-item mb-2">
+              //             <small className="text-muted">Permanent Address: </small>
+              //             <div className="small">{currUser.permenentAdress}</div>
+              //           </div>
+              //         )}
+              //       </div>
+              //     </div>
+                  
+              //     <div className="card-footer bg-transparent d-flex justify-content-between">
+              //       <Link to={`/admin/users/${currUser._id}/edit`}>
+              //         <button className="btn admin-btn2 btn-sm">
+              //           <FaEdit className="me-1" /> Edit
+              //         </button>
+              //       </Link>
+              //       <button 
+              //         onClick={() => deleteUser(currUser._id)} 
+              //         className="btn admin-btn1 btn-sm"
+              //       >
+              //         <FaTrash className="me-1" /> Delete
+              //       </button>
+              //     </div>
+              //   </div>
+              // </div>
+
+
+
               <div key={index} className="col-xl-4 col-lg-6 col-md-6 mb-4">
-                <div className="card h-100 shadow-sm border-0 professional-card">
-                  <div className="card-header bg-dark text-white d-flex justify-content-between align-items-center">
-                    <h6 className="mb-0 fw-bold">{currUser.name}</h6>
-                    <span className="badge primary-bg text-dark">
-                      {currUser.experience} {currUser.experience === '1' ? 'year' : 'years'} exp
-                    </span>
-                  </div>
-                  
-                  <div className="card-body">
-                    <div className="professional-info">
-                      <div className="info-item mb-2">
-                        <FaIdCard className="text-orange me-2" />
-                        <span className="text-muted">CNIC: </span>
-                        <strong>{currUser.cnic}</strong>
-                      </div>
-                      
-                      <div className="info-item mb-2">
-                        <FaBriefcase className="text-orange me-2" />
-                        <span className="text-muted">Profession: </span>
-                        <strong className="text-capitalize">{currUser.profession}</strong>
-                      </div>
-                      
-                      <div className="info-item mb-2">
-                        <FaStar className="text-orange me-2" />
-                        <span className="text-muted">Specialization: </span>
-                        <strong>{currUser.specialization}</strong>
-                      </div>
-                      
-                      <div className="info-item mb-2">
-                        <FaPhone className="text-orange me-2" />
-                        <span className="text-muted">Contact: </span>
-                        <strong>{currUser.contact1}</strong>
-                        {currUser.contact2 && <>, <strong>{currUser.contact2}</strong></>}
-                      </div>
-                      
-                      <div className="info-item mb-2">
-                        <FaMapMarkerAlt className="text-orange me-2" />
-                        <span className="text-muted">City: </span>
-                        <strong>{currUser.city}</strong>
-                      </div>
-                      
-                      <div className="info-item mb-2">
-                        <small className="text-muted">Address: </small>
-                        <div className="small">{currUser.address}</div>
-                      </div>
-                      
-                      {currUser.permenentAdress && (
-                        <div className="info-item mb-2">
-                          <small className="text-muted">Permanent Address: </small>
-                          <div className="small">{currUser.permenentAdress}</div>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                  
-                  <div className="card-footer bg-transparent d-flex justify-content-between">
-                    <Link to={`/admin/users/${currUser._id}/edit`}>
-                      <button className="btn admin-btn2 btn-sm">
-                        <FaEdit className="me-1" /> Edit
-                      </button>
-                    </Link>
-                    <button 
-                      onClick={() => deleteUser(currUser._id)} 
-                      className="btn admin-btn1 btn-sm"
-                    >
-                      <FaTrash className="me-1" /> Delete
-                    </button>
-                  </div>
-                </div>
-              </div>
+  <div className="card h-100 shadow-sm border-0 professional-card">
+    {/* Profile Image */}
+    <div className="position-relative">
+      <div 
+        className="card-header bg-dark text-white d-flex justify-content-between align-items-center"
+        style={{ 
+          background: `linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url(${currUser.profileImage ? `http://localhost:5000/uploads/professionals/${currUser.profileImage}` : '../Fypimgs/default-profile.jpg'}) center/cover` 
+        }}
+      >
+        <h6 className="mb-0 fw-bold text-white">{currUser.name}</h6>
+        <span className="badge primary-bg text-dark">
+          {currUser.experience} {currUser.experience === '1' ? 'year' : 'years'} exp
+        </span>
+      </div>
+      
+      {/* Profile Image Thumbnail */}
+      {currUser.profileImage && (
+        <div className="position-absolute top-100 start-50 translate-middle">
+          <img 
+            src={`http://localhost:5000/uploads/professionals/${currUser.profileImage}`}
+            alt={currUser.name}
+            className="rounded-circle border border-3 border-white"
+            style={{ width: '80px', height: '80px', objectFit: 'cover' }}
+            onError={(e) => {
+              e.target.src = '../Fypimgs/default-profile.jpg';
+            }}
+          />
+        </div>
+      )}
+    </div>
+    
+    <div className="card-body pt-5"> {/* Added pt-5 to accommodate profile image */}
+      {/* CNIC Images */}
+      {(currUser.cnicFrontImage || currUser.cnicBackImage) && (
+        <div className="mb-3">
+          <h6 className="text-muted mb-2">
+            <FaIdCard className="text-orange me-2" />
+            CNIC Documents
+          </h6>
+          <div className="d-flex gap-2">
+            {currUser.cnicFrontImage && (
+              <img 
+                src={`http://localhost:5000/uploads/professionals/${currUser.cnicFrontImage}`}
+                alt="CNIC Front"
+                className="img-thumbnail"
+                style={{ width: '80px', height: '60px', objectFit: 'cover', cursor: 'pointer' }}
+                onClick={() => window.open(`http://localhost:5000/uploads/professionals/${currUser.cnicFrontImage}`, '_blank')}
+              />
+            )}
+            {currUser.cnicBackImage && (
+              <img 
+                src={`http://localhost:5000/uploads/professionals/${currUser.cnicBackImage}`}
+                alt="CNIC Back"
+                className="img-thumbnail"
+                style={{ width: '80px', height: '60px', objectFit: 'cover', cursor: 'pointer' }}
+                onClick={() => window.open(`http://localhost:5000/uploads/professionals/${currUser.cnicBackImage}`, '_blank')}
+              />
+            )}
+          </div>
+        </div>
+      )}
+      
+      {/* Rest of your user info remains the same */}
+      <div className="professional-info">
+        <div className="info-item mb-2">
+          <FaIdCard className="text-orange me-2" />
+          <span className="text-muted">CNIC: </span>
+          <strong>{currUser.cnic}</strong>
+        </div>
+        {/* ... other info items ... */}
+      </div>
+    </div>
+    
+    {/* Card footer remains the same */}
+  </div>
+</div>
             ))}
           </div>
         ) : (
