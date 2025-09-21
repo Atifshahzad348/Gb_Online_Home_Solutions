@@ -1,4 +1,3 @@
-
 import Navbar from "../Components/Navbar";
 import { Link } from "react-router-dom";
 import React, { useState } from 'react';
@@ -6,10 +5,11 @@ import { useForm } from 'react-hook-form';
 import { useAuth } from "../store/auth";
 import { useNavigate } from "react-router-dom";
 import { toast } from 'react-toastify';
-import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import { FaEye, FaEyeSlash, FaUpload, FaIdCard, FaUserCircle } from 'react-icons/fa';
 
 const ProfessionalSignUp = () => {
-  const [professional, setProfessional] = useState({
+
+const [professional, setProfessional] = useState({
     name: "",
     cnic: "",
     contact1: "",
@@ -19,12 +19,16 @@ const ProfessionalSignUp = () => {
     experience: "",
     address: "",
     city: "",
-    permenentAdress: "", // FIXED: Changed to match backend schema
-    password: "" // FIXED: Changed to lowercase 'p' to match backend
+    permenentAdress: "",
+    password: ""
   });
 
+  const [profileImage, setProfileImage] = useState(null);
+  const [cnicFrontImage, setCnicFrontImage] = useState(null);
+  const [cnicBackImage, setCnicBackImage] = useState(null);
   const [showPassword, setShowPassword] = useState(false);
-  const { storeTokenInLS } = useAuth();
+  const [loading, setLoading] = useState(false);
+  const { storeTokenInLS, loginProfessional } = useAuth(); // Added loginProfessional
   const navigate = useNavigate();
 
   const handleInput = (event) => {
@@ -36,7 +40,23 @@ const ProfessionalSignUp = () => {
     });
   };
 
-  // Toggle password visibility
+  const handleFileChange = (event, setter) => {
+    const file = event.target.files[0];
+    if (file) {
+      // Check file size (max 5MB)
+      if (file.size > 5 * 1024 * 1024) {
+        toast.error("File size must be less than 5MB");
+        return;
+      }
+      // Check file type
+      if (!file.type.startsWith('image/')) {
+        toast.error("Please upload an image file (JPEG, PNG, etc.)");
+        return;
+      }
+      setter(file);
+    }
+  };
+
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   }
@@ -45,23 +65,51 @@ const ProfessionalSignUp = () => {
     register,
     handleSubmit,
     formState: { errors },
-    watch
   } = useForm();
 
   const submitCall = async (data) => {
+    setLoading(true);
     try {
+      const formData = new FormData();
+      
+      // Append all form data
+      Object.keys(professional).forEach(key => {
+        formData.append(key, professional[key]);
+      });
+      
+      // Append files
+      if (profileImage) formData.append('profileImage', profileImage);
+      if (cnicFrontImage) formData.append('cnicFrontImage', cnicFrontImage);
+      if (cnicBackImage) formData.append('cnicBackImage', cnicBackImage);
+
       const response = await fetch(`http://localhost:5000/professionalregister`, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(professional)
+        body: formData,
       });
 
       if (response.ok) {
         const res_data = await response.json();
-        // storeTokenInLS(res_data.token);
+        
+        // Automatically login after successful registration
+        try {
+          // Use the auth context's login function or make a direct login API call
+          const loginSuccess = await loginProfessional(professional.cnic, professional.password);
+          
+          if (loginSuccess) {
+            toast.success("Registration and login successful!");
+            navigate("/professional/dashboard"); // Redirect to professional dashboard
+          } else {
+            // If auto-login fails, redirect to login page with success message
+            toast.success("Registration successful! Please login with your credentials.");
+            navigate("/professionallogin");
+          }
+        } catch (loginError) {
+          console.error("Auto-login error:", loginError);
+          toast.success("Registration successful! Please login with your credentials.");
+          navigate("/professionallogin");
+        }
 
+        // Reset form
         setProfessional({
           name: "",
           cnic: "",
@@ -72,16 +120,29 @@ const ProfessionalSignUp = () => {
           experience: "",
           address: "",
           city: "",
-          permenentAdress: "", // FIXED: Changed here too
-          password: "" // FIXED: Changed here too
+          permenentAdress: "",
+          password: ""
         });
 
-        toast.success("Professional registered successfully");
-        setTimeout(() => { navigate("/professionallogin"); }, 2000);
+        // Reset file inputs
+        setProfileImage(null);
+        setCnicFrontImage(null);
+        setCnicBackImage(null);
+        
+        // Clear file input values
+        document.getElementById('profileImage').value = '';
+        document.getElementById('cnicFrontImage').value = '';
+        document.getElementById('cnicBackImage').value = '';
+
+      } else {
+        const errorData = await response.json();
+        toast.error(errorData.error || "Registration failed. Please try again.");
       }
     } catch (error) {
       console.log("register", error);
       toast.error("Registration failed. Please try again.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -94,7 +155,7 @@ const ProfessionalSignUp = () => {
             <img src="../Fypimgs/logo.png" alt="" className='m-auto mb-3' width={200} />
             <h2 className='mt-md-2 mb-4 text-center fw-bold'>Sign Up As Professional</h2>
 
-            <form onSubmit={handleSubmit(submitCall)} className="row">
+            <form onSubmit={handleSubmit(submitCall)} className="row" encType="multipart/form-data">
 
               <div className="col-md-6 mb-3">
                 <label htmlFor="name" className="form-label">Full Name</label>
@@ -170,6 +231,76 @@ const ProfessionalSignUp = () => {
                   onChange={handleInput}
                 />
                 {errors.contact2 && <div className="text-danger">{errors.contact2.message}</div>}
+              </div>
+
+              {/* File Upload Sections */}
+              <div className="col-md-6 mb-3">
+                <label htmlFor="profileImage" className="form-label">
+                  <FaUserCircle className="me-1" />
+                  Profile Photo
+                </label>
+                <div className="input-group">
+                  <input
+                    type="file"
+                    id="profileImage"
+                    className="form-control input-height shadow-none"
+                    accept="image/*"
+                    onChange={(e) => handleFileChange(e, setProfileImage)}
+                  />
+                </div>
+                {profileImage && (
+                  <small className="text-success">
+                    <FaUpload className="me-1" />
+                    {profileImage.name} selected
+                  </small>
+                )}
+                <small className="text-muted">Max 5MB (JPEG, PNG, etc.)</small>
+              </div>
+
+              <div className="col-md-6 mb-3">
+                <label htmlFor="cnicFrontImage" className="form-label">
+                  <FaIdCard className="me-1" />
+                  CNIC Front Side
+                </label>
+                <div className="input-group">
+                  <input
+                    type="file"
+                    id="cnicFrontImage"
+                    className="form-control input-height shadow-none"
+                    accept="image/*"
+                    onChange={(e) => handleFileChange(e, setCnicFrontImage)}
+                  />
+                </div>
+                {cnicFrontImage && (
+                  <small className="text-success">
+                    <FaUpload className="me-1" />
+                    {cnicFrontImage.name} selected
+                  </small>
+                )}
+                <small className="text-muted">Max 5MB (JPEG, PNG, etc.)</small>
+              </div>
+
+              <div className="col-md-6 mb-3">
+                <label htmlFor="cnicBackImage" className="form-label">
+                  <FaIdCard className="me-1" />
+                  CNIC Back Side
+                </label>
+                <div className="input-group">
+                  <input
+                    type="file"
+                    id="cnicBackImage"
+                    className="form-control input-height shadow-none"
+                    accept="image/*"
+                    onChange={(e) => handleFileChange(e, setCnicBackImage)}
+                  />
+                </div>
+                {cnicBackImage && (
+                  <small className="text-success">
+                    <FaUpload className="me-1" />
+                    {cnicBackImage.name} selected
+                  </small>
+                )}
+                <small className="text-muted">Max 5MB (JPEG, PNG, etc.)</small>
               </div>
 
               <div className="col-md-6 mb-3">
@@ -348,7 +479,6 @@ const ProfessionalSignUp = () => {
 };
 
 export default ProfessionalSignUp;
-
 
 
 

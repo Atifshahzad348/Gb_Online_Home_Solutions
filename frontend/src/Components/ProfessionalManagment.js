@@ -1,19 +1,17 @@
-
-
 import React, { useState, useEffect } from "react";
 import { FaEdit, FaTrash, FaSearch, FaPhone, FaIdCard, FaBriefcase, FaStar, FaMapMarkerAlt, FaUsers } from "react-icons/fa";
 import { useAuth } from "../store/auth";
 import { toast } from 'react-toastify';
 import { Link } from "react-router-dom";
 
-const UserManagement = () => {
-  const [users, setUsers] = useState([]);
+const ProfessionalManagement = () => {
+  const [professionals, setProfessionals] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const [filteredUsers, setFilteredUsers] = useState([]);
+  const [filteredProfessionals, setFilteredProfessionals] = useState([]);
   const [isSearchActive, setIsSearchActive] = useState(false);
   const { AuthorizationToken } = useAuth();
 
-  const getAllUsersData = async () => {
+  const getAllProfessionalsData = async () => {
     try {
       const response = await fetch("http://localhost:5000/api/admin/professionals", {
         method: "GET",
@@ -21,15 +19,24 @@ const UserManagement = () => {
           Authorization: AuthorizationToken,
         },
       });
-      const userData = await response.json();
-      setUsers(userData);
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
+      const professionalsData = await response.json();
+      setProfessionals(professionalsData);
     } catch (error) {
       console.error("Error fetching professionals:", error);
+      toast.error("Failed to fetch professionals data");
     }
   };
 
-  const deleteUser = async (id) => {
-    console.log(id);
+  const deleteProfessional = async (id) => {
+    if (!window.confirm("Are you sure you want to delete this professional?")) {
+      return;
+    }
+    
     try {
       const response = await fetch(`http://localhost:5000/api/admin/professionals/delete/${id}`, {
         method: "DELETE",
@@ -37,44 +44,48 @@ const UserManagement = () => {
           Authorization: AuthorizationToken,
         },
       });
-      const userData = await response.json();
-      console.log("users after delete", userData);
-      toast.success("Professional's account delete successfully");
+      
       if (response.ok) {
-        getAllUsersData();
+        toast.success("Professional's account deleted successfully");
+        getAllProfessionalsData();
+      } else {
+        const errorData = await response.json();
+        toast.error(errorData.message || "Failed to delete professional");
       }
     } catch (error) {
-      console.error("Error fetching users:", error);
+      console.error("Error deleting professional:", error);
+      toast.error("Failed to delete professional");
     }
   };
 
   useEffect(() => {
-    getAllUsersData();
+    getAllProfessionalsData();
   }, []);
 
   const handleSearch = () => {
     if (searchTerm.trim() === "") {
       setIsSearchActive(false);
-      setFilteredUsers([]);
+      setFilteredProfessionals([]);
       return;
     }
 
-    const filtered = users.filter((user) => {
-      const name = user.name?.toLowerCase() || "";
-      const email = user.email?.toLowerCase() || "";
-      const profession = user.profession?.toLowerCase() || "";
+    const filtered = professionals.filter((professional) => {
+      const name = professional.name?.toLowerCase() || "";
+      const profession = professional.profession?.toLowerCase() || "";
+      const cnic = professional.cnic?.toLowerCase() || "";
+      
       return (
         name.includes(searchTerm.toLowerCase()) ||
-        email.includes(searchTerm.toLowerCase()) ||
-        profession.includes(searchTerm.toLowerCase())
+        profession.includes(searchTerm.toLowerCase()) ||
+        cnic.includes(searchTerm.toLowerCase())
       );
     });
 
-    setFilteredUsers(filtered);
+    setFilteredProfessionals(filtered);
     setIsSearchActive(true);
   };
 
-  const displayedUsers = isSearchActive ? filteredUsers : users;
+  const displayedProfessionals = isSearchActive ? filteredProfessionals : professionals;
 
   return (
     <>
@@ -85,11 +96,14 @@ const UserManagement = () => {
             <input
               type="text"
               className="form-control shadow-none search-bdr"
-              placeholder="Search by name, email or profession..."
+              placeholder="Search by name, profession or CNIC..."
               value={searchTerm}
               onChange={(e) => {
                 setSearchTerm(e.target.value);
-                setIsSearchActive(false);
+                if (e.target.value === "") {
+                  setIsSearchActive(false);
+                  setFilteredProfessionals([]);
+                }
               }}
               onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
             />
@@ -103,160 +117,144 @@ const UserManagement = () => {
           </div>
         </div>
 
-        {displayedUsers.length > 0 ? (
+        {displayedProfessionals.length > 0 ? (
           <div className="row">
-            {displayedUsers.map((currUser, index) => (
-              // <div key={index} className="col-xl-4 col-lg-6 col-md-6 mb-4">
-              //   <div className="card h-100 shadow-sm border-0 professional-card">
-              //     <div className="card-header bg-dark text-white d-flex justify-content-between align-items-center">
-              //       <h6 className="mb-0 fw-bold">{currUser.name}</h6>
-              //       <span className="badge primary-bg text-dark">
-              //         {currUser.experience} {currUser.experience === '1' ? 'year' : 'years'} exp
-              //       </span>
-              //     </div>
-                  
-              //     <div className="card-body">
-              //       <div className="professional-info">
-              //         <div className="info-item mb-2">
-              //           <FaIdCard className="text-orange me-2" />
-              //           <span className="text-muted">CNIC: </span>
-              //           <strong>{currUser.cnic}</strong>
-              //         </div>
-                      
-              //         <div className="info-item mb-2">
-              //           <FaBriefcase className="text-orange me-2" />
-              //           <span className="text-muted">Profession: </span>
-              //           <strong className="text-capitalize">{currUser.profession}</strong>
-              //         </div>
-                      
-              //         <div className="info-item mb-2">
-              //           <FaStar className="text-orange me-2" />
-              //           <span className="text-muted">Specialization: </span>
-              //           <strong>{currUser.specialization}</strong>
-              //         </div>
-                      
-              //         <div className="info-item mb-2">
-              //           <FaPhone className="text-orange me-2" />
-              //           <span className="text-muted">Contact: </span>
-              //           <strong>{currUser.contact1}</strong>
-              //           {currUser.contact2 && <>, <strong>{currUser.contact2}</strong></>}
-              //         </div>
-                      
-              //         <div className="info-item mb-2">
-              //           <FaMapMarkerAlt className="text-orange me-2" />
-              //           <span className="text-muted">City: </span>
-              //           <strong>{currUser.city}</strong>
-              //         </div>
-                      
-              //         <div className="info-item mb-2">
-              //           <small className="text-muted">Address: </small>
-              //           <div className="small">{currUser.address}</div>
-              //         </div>
-                      
-              //         {currUser.permenentAdress && (
-              //           <div className="info-item mb-2">
-              //             <small className="text-muted">Permanent Address: </small>
-              //             <div className="small">{currUser.permenentAdress}</div>
-              //           </div>
-              //         )}
-              //       </div>
-              //     </div>
-                  
-              //     <div className="card-footer bg-transparent d-flex justify-content-between">
-              //       <Link to={`/admin/users/${currUser._id}/edit`}>
-              //         <button className="btn admin-btn2 btn-sm">
-              //           <FaEdit className="me-1" /> Edit
-              //         </button>
-              //       </Link>
-              //       <button 
-              //         onClick={() => deleteUser(currUser._id)} 
-              //         className="btn admin-btn1 btn-sm"
-              //       >
-              //         <FaTrash className="me-1" /> Delete
-              //       </button>
-              //     </div>
-              //   </div>
-              // </div>
-
-
-
+            {displayedProfessionals.map((professional, index) => (
               <div key={index} className="col-xl-4 col-lg-6 col-md-6 mb-4">
-  <div className="card h-100 shadow-sm border-0 professional-card">
-    {/* Profile Image */}
-    <div className="position-relative">
-      <div 
-        className="card-header bg-dark text-white d-flex justify-content-between align-items-center"
-        style={{ 
-          background: `linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url(${currUser.profileImage ? `http://localhost:5000/uploads/professionals/${currUser.profileImage}` : '../Fypimgs/default-profile.jpg'}) center/cover` 
-        }}
-      >
-        <h6 className="mb-0 fw-bold text-white">{currUser.name}</h6>
-        <span className="badge primary-bg text-dark">
-          {currUser.experience} {currUser.experience === '1' ? 'year' : 'years'} exp
-        </span>
-      </div>
-      
-      {/* Profile Image Thumbnail */}
-      {currUser.profileImage && (
-        <div className="position-absolute top-100 start-50 translate-middle">
-          <img 
-            src={`http://localhost:5000/uploads/professionals/${currUser.profileImage}`}
-            alt={currUser.name}
-            className="rounded-circle border border-3 border-white"
-            style={{ width: '80px', height: '80px', objectFit: 'cover' }}
-            onError={(e) => {
-              e.target.src = '../Fypimgs/default-profile.jpg';
-            }}
-          />
-        </div>
-      )}
-    </div>
-    
-    <div className="card-body pt-5"> {/* Added pt-5 to accommodate profile image */}
-      {/* CNIC Images */}
-      {(currUser.cnicFrontImage || currUser.cnicBackImage) && (
-        <div className="mb-3">
-          <h6 className="text-muted mb-2">
-            <FaIdCard className="text-orange me-2" />
-            CNIC Documents
-          </h6>
-          <div className="d-flex gap-2">
-            {currUser.cnicFrontImage && (
-              <img 
-                src={`http://localhost:5000/uploads/professionals/${currUser.cnicFrontImage}`}
-                alt="CNIC Front"
-                className="img-thumbnail"
-                style={{ width: '80px', height: '60px', objectFit: 'cover', cursor: 'pointer' }}
-                onClick={() => window.open(`http://localhost:5000/uploads/professionals/${currUser.cnicFrontImage}`, '_blank')}
-              />
-            )}
-            {currUser.cnicBackImage && (
-              <img 
-                src={`http://localhost:5000/uploads/professionals/${currUser.cnicBackImage}`}
-                alt="CNIC Back"
-                className="img-thumbnail"
-                style={{ width: '80px', height: '60px', objectFit: 'cover', cursor: 'pointer' }}
-                onClick={() => window.open(`http://localhost:5000/uploads/professionals/${currUser.cnicBackImage}`, '_blank')}
-              />
-            )}
-          </div>
-        </div>
-      )}
-      
-      {/* Rest of your user info remains the same */}
-      <div className="professional-info">
-        <div className="info-item mb-2">
-          <FaIdCard className="text-orange me-2" />
-          <span className="text-muted">CNIC: </span>
-          <strong>{currUser.cnic}</strong>
-        </div>
-        {/* ... other info items ... */}
-      </div>
-    </div>
-    
-    {/* Card footer remains the same */}
-  </div>
-</div>
+                <div className="card h-100 shadow-sm border-0 professional-card">
+                  {/* Profile Header with Image */}
+                  <div className="position-relative">
+                    <div 
+                      className="card-header bg-dark text-white d-flex justify-content-between align-items-center"
+                      style={{ 
+                        minHeight: '100px',
+                        background: professional.profileImage 
+                          ? `linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url(http://localhost:5000/uploads/professionals/${professional.profileImage}) center/cover`
+                          : `linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('../Fypimgs/default-profile.jpg') center/cover`
+                      }}
+                    >
+                      <h6 className="mb-0 fw-bold text-white">{professional.name}</h6>
+                      <span className="badge primary-bg text-dark">
+                        {professional.experience} {professional.experience === '1' ? 'year' : 'years'} exp
+                      </span>
+                    </div>
+                    
+                    {/* Profile Image Thumbnail */}
+                    <div className="position-absolute top-100 start-50 translate-middle">
+                      <img 
+                        src={professional.profileImage 
+                          ? `http://localhost:5000/uploads/professionals/${professional.profileImage}`
+                          : '../Fypimgs/default-profile.jpg'
+                        }
+                        alt={professional.name}
+                        className="rounded-circle border border-3 border-white"
+                        style={{ width: '80px', height: '80px', objectFit: 'cover' }}
+                        onError={(e) => {
+                          e.target.src = '../Fypimgs/default-profile.jpg';
+                        }}
+                      />
+                    </div>
+                  </div>
+                  
+                  <div className="card-body pt-5">
+                    {/* CNIC Images */}
+                    {(professional.cnicFrontImage || professional.cnicBackImage) && (
+                      <div className="mb-3">
+                        <h6 className="text-muted mb-2">
+                          <FaIdCard className="text-orange me-2" />
+                          CNIC Documents
+                        </h6>
+                        <div className="d-flex gap-2">
+                          {professional.cnicFrontImage && (
+                            <img 
+                              src={`http://localhost:5000/uploads/professionals/${professional.cnicFrontImage}`}
+                              alt="CNIC Front"
+                              className="img-thumbnail"
+                              style={{ width: '80px', height: '60px', objectFit: 'cover', cursor: 'pointer' }}
+                              onClick={() => window.open(`http://localhost:5000/uploads/professionals/${professional.cnicFrontImage}`, '_blank')}
+                            />
+                          )}
+                          {professional.cnicBackImage && (
+                            <img 
+                              src={`http://localhost:5000/uploads/professionals/${professional.cnicBackImage}`}
+                              alt="CNIC Back"
+                              className="img-thumbnail"
+                              style={{ width: '80px', height: '60px', objectFit: 'cover', cursor: 'pointer' }}
+                              onClick={() => window.open(`http://localhost:5000/uploads/professionals/${professional.cnicBackImage}`, '_blank')}
+                            />
+                          )}
+                        </div>
+                      </div>
+                    )}
+                    
+                    {/* Professional Information */}
+                    <div className="professional-info">
+                      <div className="info-item mb-2">
+                        <FaIdCard className="text-orange me-2" />
+                        <span className="text-muted">CNIC: </span>
+                        <strong>{professional.cnic}</strong>
+                      </div>
+                      
+                      <div className="info-item mb-2">
+                        <FaBriefcase className="text-orange me-2" />
+                        <span className="text-muted">Profession: </span>
+                        <strong className="text-capitalize">{professional.profession}</strong>
+                      </div>
+                      
+                      {professional.specialization && (
+                        <div className="info-item mb-2">
+                          <FaStar className="text-orange me-2" />
+                          <span className="text-muted">Specialization: </span>
+                          <strong>{professional.specialization}</strong>
+                        </div>
+                      )}
+                      
+                      <div className="info-item mb-2">
+                        <FaPhone className="text-orange me-2" />
+                        <span className="text-muted">Contact: </span>
+                        <strong>{professional.contact1}</strong>
+                        {professional.contact2 && <>, <strong>{professional.contact2}</strong></>}
+                      </div>
+                      
+                      {professional.city && (
+                        <div className="info-item mb-2">
+                          <FaMapMarkerAlt className="text-orange me-2" />
+                          <span className="text-muted">City: </span>
+                          <strong>{professional.city}</strong>
+                        </div>
+                      )}
+                      
+                      {professional.address && (
+                        <div className="info-item mb-2">
+                          <small className="text-muted">Address: </small>
+                          <div className="small">{professional.address}</div>
+                        </div>
+                      )}
+                      
+                      {professional.permenentAdress && (
+                        <div className="info-item mb-2">
+                          <small className="text-muted">Permanent Address: </small>
+                          <div className="small">{professional.permenentAdress}</div>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                  
+                  <div className="card-footer bg-transparent d-flex justify-content-between">
+                    <Link to={`/admin/professionals/${professional._id}/edit`}>
+                      <button className="btn admin-btn2 btn-sm">
+                        <FaEdit className="me-1" /> Edit
+                      </button>
+                    </Link>
+                    <button 
+                      onClick={() => deleteProfessional(professional._id)} 
+                      className="btn admin-btn1 btn-sm"
+                    >
+                      <FaTrash className="me-1" /> Delete
+                    </button>
+                  </div>
+                </div>
+              </div>
             ))}
           </div>
         ) : (
@@ -318,13 +316,4 @@ const UserManagement = () => {
   );
 };
 
-export default UserManagement;
-
-
-
-
-
-
-
-
-// final test
+export default ProfessionalManagement;
